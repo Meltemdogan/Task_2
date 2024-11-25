@@ -1,29 +1,23 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Player;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class EnemyController : MonoBehaviour
 {
     [SerializeField] private EnemyData enemyData;
-    [SerializeField] Slider enemyHealthBar;
+    [SerializeField] HealthBar HealthBar;
     
-    private Transform player; 
-    //public float speed = 3.0f; 
+    private Transform player => PlayerController.Instance.transform;
     public float stoppingDistance = 1.0f;
     
-    private float currentHealth;
-    
-    PlayerHealth playerHealth;
-
-    private void Start()
+    private void OnEnable()
     {
-        currentHealth = enemyData.health;
-        player = GameObject.FindWithTag("Player").transform;
-        playerHealth = player.GetComponent<PlayerHealth>();
+        HealthBar.initialize(enemyData.health);
     }
-
+    
     private void Update()
     {
         if (player == null) return; 
@@ -45,12 +39,8 @@ public class EnemyController : MonoBehaviour
     
     public void TakeDamage(float damage)
     {
-        //currentHealth = enemyData.health;
-        //damage = enemyData.projectileDamage;
-        currentHealth -= damage;
-        Debug.Log("Enemy Health: " + currentHealth);
-        Debug.Log("Damage: " + damage);
-        if (currentHealth <= 0)
+        HealthBar.TakeDamage(damage);
+        if (HealthBar.CurrentHealth <= 0)
         {
             Die();
         }
@@ -68,7 +58,7 @@ public class EnemyController : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
             gameObject.SetActive(false);
-            //other.gameObject.GetComponent<IDamageable>().TakeDamage(enemyData.damage);
+           PlayerController.Instance.TakeDamage(enemyData.damage);
         }
     }
 }

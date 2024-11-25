@@ -11,5 +11,4 @@ public class EnemyData : ScriptableObject
     public float speed;
     public float damage;
     public int points;
-    public float projectileDamage;
 }

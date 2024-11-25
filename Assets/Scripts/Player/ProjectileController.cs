@@ -4,7 +4,6 @@ using UnityEngine;
 public class ProjectileController : MonoBehaviour
 {
     [SerializeField] Transform spawnPoint;
-    [SerializeField] private ObjectPool objectPool;
     [SerializeField] private float projectileLifeTime = 5f;
     
     public float speed = 50.0f;

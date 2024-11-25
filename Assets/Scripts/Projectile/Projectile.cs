@@ -14,11 +14,6 @@ public class Projectile : MonoBehaviour
         enemyController = GetComponent<EnemyController>();
     }
 
-    private void Update()
-    {
-        ProjectileDamage = EnemySpawner.Instance.projectileDamage;
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if(other.TryGetComponent(out EnemyController enemyController))

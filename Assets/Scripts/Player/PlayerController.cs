@@ -7,26 +7,42 @@ namespace Player
 {
     public class PlayerController : MonoBehaviour
     {
+        public static PlayerController Instance;
         Rigidbody rb;
         public float speed = 5.0f;
         private Vector3 movement;
         public Camera mainCamera;
-
+        [SerializeField] private HealthBar healthBar;
+        
+        private void Awake()
+        {
+            Instance = this;
+        }
+        
+        [SerializeField] private float m_MaxHealth = 100f;
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
+            healthBar.initialize(m_MaxHealth);
         }
         
         void Update()
         {
             HandleMovementInput();
             LookAtMouse();
+            transform.Translate(movement * speed * Time.deltaTime, Space.World);
         }
         
         private void FixedUpdate()
         {
-            MovePlayer();
+            // MovePlayer();
         }
+        
+        public void TakeDamage(float damage)
+        {
+            healthBar.TakeDamage(damage);
+        }
+        
         private void HandleMovementInput()
         {
             float moveX = Input.GetAxis("Horizontal");

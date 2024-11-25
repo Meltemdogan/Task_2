@@ -50,8 +50,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = GetRandomSpawnPosition();
         
         m_SelectedData = m_Enemies[Random.Range(0, MaxIndex)];
-        projectileDamage = m_Enemies[MaxIndex-1].projectileDamage;
-        currentHealth = m_Enemies[MaxIndex-1].health;
+        currentHealth = m_SelectedData.health;
         
         GameObject enemy = ObjectPoolManager.Instance.GetObject(m_SelectedData.enemyName);
         
